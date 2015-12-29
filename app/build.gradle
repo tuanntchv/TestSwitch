@@ -51,9 +51,11 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.android.support:recyclerview-v7:23.1.1'
-    // lombok
+    // Lombok
     compile 'org.projectlombok:lombok:1.16.6'
     // annotations
     apt "org.androidannotations:androidannotations:$AAVersion"
     compile "org.androidannotations:androidannotations-api:$AAVersion"
+    // Sugar
+    compile 'com.github.satyan:sugar:1.4'
 }

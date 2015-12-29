@@ -3,11 +3,28 @@
     package="com.tuannt.testswitch">
 
     <application
+        android:name=".app.BaseApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- Sugar config-->
+        <meta-data
+            android:name="DATABASE"
+            android:value="qswitch.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="2" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="com.tuannt.testswitch" />
+        <!-- end sugar config-->
+
         <activity
             android:name=".ui.home.HomeActivity_"
             android:label="@string/app_name">

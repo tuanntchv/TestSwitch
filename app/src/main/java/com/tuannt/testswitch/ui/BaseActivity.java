@@ -70,7 +70,6 @@ public abstract class BaseActivity extends AppCompatActivity implements OnBaseAc
 
     @Override
     public void setHeaderTitle(String title) {
-        //TODO set header title here
         mTvHeaderTitle.setText(title);
     }
 }
