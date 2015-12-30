@@ -11,6 +11,8 @@ import org.androidannotations.annotations.EActivity;
  */
 @EActivity(R.layout.activity_home)
 public class HomeActivity extends BaseActivity {
+    private final String TAG = this.getClass().getSimpleName();
+
     @Override
     public void initViews() {
     }
