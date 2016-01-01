@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_app_screen">App</string>
+    <string name="title_contact_screen">Contact</string>
+    <string name="title_tag_screen">Tag</string>
+</resources>
