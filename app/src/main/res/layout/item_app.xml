@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="110dp"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginStart="8dp"
+    android:layout_marginTop="8dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/mContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bg_contact_item"
+        android:clickable="true"
+        android:paddingBottom="8dp">
+
+        <ImageView
+            android:id="@+id/mImgAddTag"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:padding="3dp"
+            android:src="@drawable/ic_add_tag"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:id="@+id/mTvAppName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/mImgAddTag"
+            android:maxLines="1"
+            android:paddingEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingTop="6dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            tools:ignore="RtlSymmetry"
+            tools:text="Tuant NT" />
+
+    </RelativeLayout>
+
+    <com.github.siyamed.shapeimageview.CircularImageView
+        android:id="@+id/mImgAvatar"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/bg_avatar_contact_item"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/ic_launcher"
+        app:siBorderColor="#dc7171"
+        app:siBorderWidth="1dp" />
+</RelativeLayout>

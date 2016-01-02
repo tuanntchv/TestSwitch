@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import com.orm.dsl.Column;
+import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
 
 import java.util.List;
@@ -42,6 +43,8 @@ public class Contact extends BaseModel {
     @Column(name = "icon_path")
     private String iconPath;
     private int rank;
+    @Ignore
+    private boolean isSelected;
 
     public Contact() {
     }
@@ -52,6 +55,7 @@ public class Contact extends BaseModel {
         this.phoneNumber = in.readString();
         this.iconPath = in.readString();
         this.rank = in.readInt();
+        this.isSelected = in.readByte() !=0;
     }
 
     @Override
@@ -61,6 +65,7 @@ public class Contact extends BaseModel {
         dest.writeString(this.phoneNumber);
         dest.writeString(this.iconPath);
         dest.writeInt(this.rank);
+        dest.writeByte((byte) (isSelected ? 1 : 0));
     }
 
     public static List<Contact> getContacts() {
@@ -96,5 +101,9 @@ public class Contact extends BaseModel {
                 .tagId(tag.getId())
                 .contactId(getId()).build();
         return contactTag.save() != 0;
+    }
+
+    public String getNameDisplay(){
+        return firstName; // TODO update later
     }
 }
