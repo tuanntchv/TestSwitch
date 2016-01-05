@@ -1,4 +1,4 @@
-package com.tuannt.testswitch.ui.home;
+package com.tuannt.testswitch.ui.tag;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -19,7 +19,7 @@ import java.util.List;
  *
  * @author TuanNT
  */
-public class TagAdapter extends BaseAdapter {
+public class TagListAdapter extends BaseAdapter {
     public interface OnTagOnClickListener {
         void onDeleteClick(int position);
 
@@ -29,7 +29,7 @@ public class TagAdapter extends BaseAdapter {
     private List<Tag> mTags;
     private OnTagOnClickListener mListener;
 
-    public TagAdapter(Context context, List<Tag> list, OnTagOnClickListener l) {
+    public TagListAdapter(Context context, List<Tag> list, OnTagOnClickListener l) {
         super(context);
         this.mTags = list;
         this.mListener = l;

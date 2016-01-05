@@ -7,6 +7,9 @@ import android.support.v4.view.ViewPager;
 
 import com.tuannt.testswitch.R;
 import com.tuannt.testswitch.ui.BaseActivity;
+import com.tuannt.testswitch.ui.app.AppListFragment_;
+import com.tuannt.testswitch.ui.contact.ContactListFragment_;
+import com.tuannt.testswitch.ui.tag.TagListFragment_;
 
 import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.ViewById;
@@ -71,6 +74,8 @@ public class HomeActivity extends BaseActivity {
             public void onPageScrollStateChanged(int state) {
             }
         });
+        // default page
+        mViewPager.setCurrentItem(1);
     }
 
     /**
@@ -85,11 +90,11 @@ public class HomeActivity extends BaseActivity {
         @Override
         public Fragment getItem(int position) {
             if (position == HomePager.CONTACT.getValue()) {
-                return ContactFragment_.builder().build();
+                return ContactListFragment_.builder().build();
             } else if (position == HomePager.TAG.getValue()) {
-                return TagFragment_.builder().build();
+                return TagListFragment_.builder().build();
             }
-            return AppFragment_.builder().build();
+            return AppListFragment_.builder().build();
         }
 
         @Override

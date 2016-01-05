@@ -1,4 +1,4 @@
-package com.tuannt.testswitch.ui.home;
+package com.tuannt.testswitch.ui.app;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.tuannt.testswitch.R;
-import com.tuannt.testswitch.models.Contact;
+import com.tuannt.testswitch.models.App;
 import com.tuannt.testswitch.ui.BaseAdapter;
 
 import java.util.List;
@@ -20,23 +20,23 @@ import java.util.List;
  *
  * @author TuanNT
  */
-public class ContactAdapter extends BaseAdapter {
+public class AppListAdapter extends BaseAdapter {
     /**
      * Contact list listener
      */
-    protected interface OnContactListener {
-        void onContactItemClick(int position);
+    protected interface OnAppItemListener {
+        void onAppItemClick(int position);
 
         void onAddTagClick(int position);
     }
 
     private final int NUM_ITEM_PER_ROW = 2;
-    private List<Contact> mContacts;
-    private OnContactListener mListener;
+    private List<App> mContacts;
+    private OnAppItemListener mListener;
 
     private int mItemWidth;
 
-    public ContactAdapter(Context context, List<Contact> list, OnContactListener l, int recycleWidth) {
+    public AppListAdapter(Context context, List<App> list, OnAppItemListener l, int recycleWidth) {
         super(context);
         this.mContacts = list;
         this.mListener = l;
@@ -47,16 +47,15 @@ public class ContactAdapter extends BaseAdapter {
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_contact, parent, false);
-        return new ContactHolder(view);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_app, parent, false);
+        return new AppHolder(view);
     }
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ContactHolder contactHolder = (ContactHolder) holder;
-        Contact contact = mContacts.get(position);
-        contactHolder.tvContactName.setText(contact.getFirstName());
-        contactHolder.tvPhoneNumber.setText(contact.getPhoneNumber());
+        AppHolder appHolder = (AppHolder) holder;
+        App app = mContacts.get(position);
+        appHolder.tvAppName.setText(app.getName());
         //TODO load image here
     }
 
@@ -65,19 +64,17 @@ public class ContactAdapter extends BaseAdapter {
         return mContacts.size();
     }
 
-    private class ContactHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class AppHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final CircularImageView imgAvatar;
         private final ImageView imgAddTag;
-        private final TextView tvContactName;
-        private final TextView tvPhoneNumber;
+        private final TextView tvAppName;
         private final View mContainer;
 
-        public ContactHolder(View itemView) {
+        public AppHolder(View itemView) {
             super(itemView);
             imgAvatar = (CircularImageView) itemView.findViewById(R.id.mImgAvatar);
             imgAddTag = (ImageView) itemView.findViewById(R.id.mImgAddTag);
-            tvContactName = (TextView) itemView.findViewById(R.id.mTvContactName);
-            tvPhoneNumber = (TextView) itemView.findViewById(R.id.mTvPhoneNumber);
+            tvAppName = (TextView) itemView.findViewById(R.id.mTvAppName);
             mContainer = itemView.findViewById(R.id.mContainer);
 
             itemView.getLayoutParams().width = mItemWidth;
@@ -94,7 +91,7 @@ public class ContactAdapter extends BaseAdapter {
             if (v.getId() == R.id.mImgAddTag) {
                 mListener.onAddTagClick(getLayoutPosition());
             } else {
-                mListener.onContactItemClick(getLayoutPosition());
+                mListener.onAppItemClick(getLayoutPosition());
             }
         }
     }

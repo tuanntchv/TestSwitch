@@ -1,4 +1,4 @@
-package com.tuannt.testswitch.ui.home;
+package com.tuannt.testswitch.ui.app;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,10 +19,10 @@ import java.util.List;
  * @author TuanNT
  */
 @EFragment(R.layout.fragment_app)
-public class AppFragment extends BaseFragment implements AppAdapter.OnAppItemListener {
+public class AppListFragment extends BaseFragment implements AppListAdapter.OnAppItemListener {
 
     private List<App> mApps = new ArrayList<>();
-    private AppAdapter mAdapter;
+    private AppListAdapter mAdapter;
 
     @ViewById
     RecyclerView mRecyclerView;
@@ -37,14 +37,21 @@ public class AppFragment extends BaseFragment implements AppAdapter.OnAppItemLis
     }
 
     private void initRecycleView() {
-        for (int i = 0; i < 20; i++) {
-            App contact = App.builder()
-                    .name("app " + i)
-                    .build();
-            mApps.add(contact);
+        mApps = App.getApps();
+        // TODO: 1/5/2016 face data
+        if (mApps == null || mApps.isEmpty()) {
+            for (int i = 0; i < 20; i++) {
+                App contact = App.builder()
+                        .name("app " + i)
+                        .mPackage("ds")
+                        .iconPath("a")
+                        .build();
 
+                contact.save();
+                mApps.add(contact);
+            }
         }
-        mAdapter = new AppAdapter(getContext(), mApps, this, mRecyclerView.getWidth());
+        mAdapter = new AppListAdapter(getContext(), mApps, this, mRecyclerView.getWidth());
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);

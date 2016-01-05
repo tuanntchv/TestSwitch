@@ -1,4 +1,4 @@
-package com.tuannt.testswitch.ui.home;
+package com.tuannt.testswitch.ui.tag;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -19,10 +19,9 @@ import java.util.List;
  * @author TuanNT
  */
 @EFragment(R.layout.fragment_tag)
-public class TagFragment extends BaseFragment implements TagAdapter.OnTagOnClickListener {
-
+public class TagListFragment extends BaseFragment implements TagListAdapter.OnTagOnClickListener {
     private List<Tag> mTags = new ArrayList<>();
-    private TagAdapter mAdapter;
+    private TagListAdapter mAdapter;
 
     @ViewById
     RecyclerView mRecyclerView;
@@ -33,18 +32,26 @@ public class TagFragment extends BaseFragment implements TagAdapter.OnTagOnClick
     }
 
     private void initRecyclerView() {
-        for (int i = 0; i < 20; i++) {
-            Tag tag;
-            if(i ==0) {
-                tag = Tag.builder().tagName("Aag" + i).build();
-            }     if(i == 5) {
-                tag = Tag.builder().tagName("Dag" + i).build();
-            }  else{
-                tag = Tag.builder().tagName("Tag" + i).build();
+        mTags = Tag.getTags();
+        //TODO face data
+        if (mTags == null || mTags.isEmpty()) {
+            for (int i = 0; i < 20; i++) {
+                Tag tag;
+                if (i == 0) {
+                    tag = Tag.builder().tagName("Aag" + i).build();
+                }
+                if (i == 5) {
+                    tag = Tag.builder().tagName("Dag" + i).build();
+                } else {
+                    tag = Tag.builder().tagName("Tag" + i).build();
+                }
+                tag.save();
+                mTags.add(tag);
             }
-            mTags.add(tag);
         }
-        mAdapter = new TagAdapter(getContext(), mTags, this);
+
+        //
+        mAdapter = new TagListAdapter(getContext(), mTags, this);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
