@@ -33,6 +33,9 @@ public class App extends BaseModel {
         }
     };
 
+    public App() {
+    }
+
     @Column(name = "app_name", notNull = true)
     private String name;
     @Column(name = "m_package", notNull = true)

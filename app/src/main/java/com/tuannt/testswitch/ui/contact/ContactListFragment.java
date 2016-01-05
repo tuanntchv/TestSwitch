@@ -6,15 +6,13 @@ import android.support.v7.widget.RecyclerView;
 
 import com.tuannt.testswitch.R;
 import com.tuannt.testswitch.models.Contact;
+import com.tuannt.testswitch.models.ContactListDataSet;
 import com.tuannt.testswitch.ui.BaseFragment;
 import com.tuannt.testswitch.ui.tag.TagListActivity_;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.OnActivityResult;
 import org.androidannotations.annotations.ViewById;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Contact fragment
@@ -25,7 +23,7 @@ import java.util.List;
 public class ContactListFragment extends BaseFragment implements ContactListAdapter.OnContactListener {
     public static final int REQUEST_ADD_TAG = 100;
 
-    private List<Contact> mContacts = new ArrayList<>();
+    private ContactListDataSet mDataSet = new ContactListDataSet();
     private ContactListAdapter mAdapter;
 
     @ViewById
@@ -37,10 +35,10 @@ public class ContactListFragment extends BaseFragment implements ContactListAdap
     }
 
     private void initRecycleView() {
-        mContacts = Contact.getContacts();
+        mDataSet.setContacts(Contact.getContacts());
 
         //TODO face data
-        if (mContacts == null || mContacts.isEmpty()) {
+        if (mDataSet.getContacts() == null || mDataSet.getContacts().isEmpty()) {
             for (int i = 0; i < 20; i++) {
                 Contact contact = Contact.builder()
                         .firstName("first Name " + i)
@@ -48,11 +46,11 @@ public class ContactListFragment extends BaseFragment implements ContactListAdap
                         .phoneNumber("123" + i)
                         .build();
                 contact.save();
-                mContacts.add(contact);
+                mDataSet.getContacts().add(contact);
             }
         }
 
-        mAdapter = new ContactListAdapter(getContext(), mContacts, this, mRecyclerView.getWidth());
+        mAdapter = new ContactListAdapter(getContext(), mDataSet, this, mRecyclerView.getWidth());
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);

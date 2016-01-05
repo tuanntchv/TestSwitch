@@ -39,6 +39,9 @@ public class AppTag extends BaseModel {
     @Column(name = "tag_id")
     private long TagId;
 
+    public AppTag() {
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.AppId);

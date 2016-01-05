@@ -43,10 +43,9 @@ public class AppListFragment extends BaseFragment implements AppListAdapter.OnAp
             for (int i = 0; i < 20; i++) {
                 App contact = App.builder()
                         .name("app " + i)
-                        .mPackage("ds")
+                        .mPackage("ds" + i)
                         .iconPath("a")
                         .build();
-
                 contact.save();
                 mApps.add(contact);
             }

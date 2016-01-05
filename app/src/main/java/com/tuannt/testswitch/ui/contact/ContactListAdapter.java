@@ -10,10 +10,8 @@ import android.widget.TextView;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.tuannt.testswitch.R;
-import com.tuannt.testswitch.models.Contact;
+import com.tuannt.testswitch.models.ContactListDataSet;
 import com.tuannt.testswitch.ui.BaseAdapter;
-
-import java.util.List;
 
 /**
  * Contact Adapter
@@ -31,14 +29,14 @@ public class ContactListAdapter extends BaseAdapter {
     }
 
     private final int NUM_ITEM_PER_ROW = 2;
-    private List<Contact> mContacts;
+    private ContactListDataSet mDataSet;
     private OnContactListener mListener;
 
     private int mItemWidth;
 
-    public ContactListAdapter(Context context, List<Contact> list, OnContactListener l, int recycleWidth) {
+    public ContactListAdapter(Context context, ContactListDataSet dataSet, OnContactListener l, int recycleWidth) {
         super(context);
-        this.mContacts = list;
+        this.mDataSet = dataSet;
         this.mListener = l;
         int paddingLeft = getResources().getDimensionPixelOffset(R.dimen.list_padding_left);
         int paddingRight = getResources().getDimensionPixelOffset(R.dimen.list_padding_right);
@@ -54,15 +52,14 @@ public class ContactListAdapter extends BaseAdapter {
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ContactHolder contactHolder = (ContactHolder) holder;
-        Contact contact = mContacts.get(position);
-        contactHolder.tvContactName.setText(contact.getFirstName());
-        contactHolder.tvPhoneNumber.setText(contact.getPhoneNumber());
+        contactHolder.tvContactName.setText(mDataSet.getName(position));
+        contactHolder.tvPhoneNumber.setText(mDataSet.getPhoneNumber(position));
         //TODO load image here
     }
 
     @Override
     public int getItemCount() {
-        return mContacts.size();
+        return mDataSet.getSize();
     }
 
     private class ContactHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

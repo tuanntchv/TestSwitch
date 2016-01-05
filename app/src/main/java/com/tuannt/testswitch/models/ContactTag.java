@@ -39,6 +39,9 @@ public class ContactTag extends BaseModel {
     @Column(name = "tag_id", notNull = true)
     private long tagId;
 
+    public ContactTag() {
+    }
+
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeLong(this.contactId);
