@@ -33,6 +33,7 @@ public abstract class BaseFragment extends Fragment implements OnBaseActivityLis
 
     protected abstract void initViews();
     public abstract void initHeaderTitle();
+    public abstract boolean canBack();
 
     @Override
     public void setHeaderTitle(String title) {

@@ -41,6 +41,7 @@ public class Tag extends BaseModel {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(getId());
         dest.writeString(this.tagName);
         dest.writeString(this.iconPath);
         dest.writeInt(this.rank);
@@ -50,6 +51,7 @@ public class Tag extends BaseModel {
     }
 
     protected Tag(Parcel in) {
+        setId(in.readLong());
         this.tagName = in.readString();
         this.iconPath = in.readString();
         this.rank = in.readInt();

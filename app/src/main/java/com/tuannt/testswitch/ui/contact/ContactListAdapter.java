@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,7 @@ import com.github.siyamed.shapeimageview.CircularImageView;
 import com.tuannt.testswitch.R;
 import com.tuannt.testswitch.models.ContactListDataSet;
 import com.tuannt.testswitch.ui.BaseAdapter;
+import com.tuannt.testswitch.ui.views.MultiListenerView;
 
 /**
  * Contact Adapter
@@ -19,6 +22,8 @@ import com.tuannt.testswitch.ui.BaseAdapter;
  * @author TuanNT
  */
 public class ContactListAdapter extends BaseAdapter {
+    private final String TAG = this.getClass().getSimpleName();
+
     /**
      * Contact list listener
      */
@@ -26,6 +31,8 @@ public class ContactListAdapter extends BaseAdapter {
         void onContactItemClick(int position);
 
         void onAddTagClick(int position);
+
+        void onMultiSelectEnable(int position);
     }
 
     private final int NUM_ITEM_PER_ROW = 2;
@@ -54,7 +61,23 @@ public class ContactListAdapter extends BaseAdapter {
         ContactHolder contactHolder = (ContactHolder) holder;
         contactHolder.tvContactName.setText(mDataSet.getName(position));
         contactHolder.tvPhoneNumber.setText(mDataSet.getPhoneNumber(position));
+        contactHolder.mContainer.setSelected(mDataSet.isSelectedItem(position));
+        showBtnAddAddTag(contactHolder.imgAddTag, !mDataSet.isMultiSelected());
         //TODO load image here
+    }
+
+    private void showBtnAddAddTag(View view, boolean iShow) {
+        if ((iShow && view.getVisibility() == View.INVISIBLE) ||
+                (!iShow && view.getVisibility() == View.VISIBLE)) {
+            Animation animation;
+            if (iShow) {
+                animation = AnimationUtils.loadAnimation(getContext(), R.anim.show_add_tag_button);
+            } else {
+                animation = AnimationUtils.loadAnimation(getContext(), R.anim.hide_add_tag_button);
+            }
+            view.startAnimation(animation);
+        }
+        view.setVisibility(iShow ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
@@ -62,12 +85,12 @@ public class ContactListAdapter extends BaseAdapter {
         return mDataSet.getSize();
     }
 
-    private class ContactHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    private class ContactHolder extends RecyclerView.ViewHolder implements View.OnClickListener, MultiListenerView.OnMultiListener {
         private final CircularImageView imgAvatar;
         private final ImageView imgAddTag;
         private final TextView tvContactName;
         private final TextView tvPhoneNumber;
-        private final View mContainer;
+        private final MultiListenerView mContainer;
 
         public ContactHolder(View itemView) {
             super(itemView);
@@ -75,24 +98,32 @@ public class ContactListAdapter extends BaseAdapter {
             imgAddTag = (ImageView) itemView.findViewById(R.id.mImgAddTag);
             tvContactName = (TextView) itemView.findViewById(R.id.mTvContactName);
             tvPhoneNumber = (TextView) itemView.findViewById(R.id.mTvPhoneNumber);
-            mContainer = itemView.findViewById(R.id.mContainer);
+            mContainer = (MultiListenerView) itemView.findViewById(R.id.mContainer);
 
             itemView.getLayoutParams().width = mItemWidth;
-
             imgAddTag.setOnClickListener(this);
-            itemView.setOnClickListener(this);
+            mContainer.setListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            if (mListener == null) {
-                return;
-            }
             if (v.getId() == R.id.mImgAddTag) {
                 mListener.onAddTagClick(getLayoutPosition());
-            } else {
-                mListener.onContactItemClick(getLayoutPosition());
             }
+        }
+
+        @Override
+        public void onClick() {
+            mListener.onContactItemClick(getLayoutPosition());
+        }
+
+        @Override
+        public void onLongPress() {
+            int index = getLayoutPosition();
+            if (index < 0) {
+                return;
+            }
+            mListener.onMultiSelectEnable(getLayoutPosition());
         }
     }
 }

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import com.tuannt.testswitch.R;
 import com.tuannt.testswitch.models.Tag;
 import com.tuannt.testswitch.ui.BaseFragment;
+import com.tuannt.testswitch.ui.OnConfirmDialogListener;
 
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.ViewById;
@@ -20,8 +21,27 @@ import java.util.List;
  */
 @EFragment(R.layout.fragment_tag)
 public class TagListFragment extends BaseFragment implements TagListAdapter.OnTagOnClickListener {
+    public enum TagListAction {
+        ADD_TAG_INTO_CONTACT(0), ADD_TAG_INTO_APP(1), DEFAULT(2);
+
+        private final int value;
+
+        TagListAction(int i) {
+            this.value = i;
+        }
+
+        public int getValue() {
+            return value;
+        }
+    }
+
+    public interface OnSelectedTagListener {
+        void onSelected(Tag tag);
+    }
+
     private List<Tag> mTags = new ArrayList<>();
     private TagListAdapter mAdapter;
+    private TagListAction mAction;
 
     @ViewById
     RecyclerView mRecyclerView;
@@ -57,17 +77,49 @@ public class TagListFragment extends BaseFragment implements TagListAdapter.OnTa
         mRecyclerView.setAdapter(mAdapter);
     }
 
+    public void setAction(TagListAction mAction) {
+        this.mAction = mAction;
+    }
+
     @Override
     public void initHeaderTitle() {
     }
 
     @Override
-    public void onDeleteClick(int position) {
+    public boolean canBack() {
+        return true;
+    }
 
+    @Override
+    public void onDeleteClick(final int position) {
+        onShowConfirmMessage(null, getString(R.string.message_confirm_delete_tag), new OnConfirmDialogListener() {
+            @Override
+            public void onAccept() {
+                mTags.get(position).delete();
+                mTags.remove(position);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancel() {
+            }
+        });
     }
 
     @Override
     public void onTagItemClick(int position) {
-
+        if (mAction == TagListAction.ADD_TAG_INTO_APP) {
+            // TODO: 1/5/2016 perform add tag into app
+            if (getContext() instanceof OnSelectedTagListener) {
+                ((OnSelectedTagListener) getContext()).onSelected(mTags.get(position));
+            }
+        } else if (mAction == TagListAction.ADD_TAG_INTO_CONTACT) {
+            // TODO: 1/5/2016 perform add tag into app
+            if (getContext() instanceof OnSelectedTagListener) {
+                ((OnSelectedTagListener) getContext()).onSelected(mTags.get(position));
+            }
+        } else {
+            // TODO: 1/5/2016 default preform on tag click
+        }
     }
 }

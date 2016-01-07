@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.support.annotation.Nullable;
 
 import com.orm.dsl.Column;
+import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
 
 import java.util.List;
@@ -43,6 +44,8 @@ public class App extends BaseModel {
     @Column(name = "icon_path", notNull = true)
     private String iconPath;
     private int rank;
+    @Ignore
+    private boolean isSelected;
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {

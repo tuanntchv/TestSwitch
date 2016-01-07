@@ -50,16 +50,18 @@ public class Contact extends BaseModel {
     }
 
     protected Contact(Parcel in) {
+        this.setId(in.readLong());
         this.firstName = in.readString();
         this.lastName = in.readString();
         this.phoneNumber = in.readString();
         this.iconPath = in.readString();
         this.rank = in.readInt();
-        this.isSelected = in.readByte() !=0;
+        this.isSelected = in.readByte() != 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(getId());
         dest.writeString(this.firstName);
         dest.writeString(this.lastName);
         dest.writeString(this.phoneNumber);
@@ -103,7 +105,7 @@ public class Contact extends BaseModel {
         return contactTag.save() != 0;
     }
 
-    public String getNameDisplay(){
+    public String getNameDisplay() {
         return firstName; // TODO update later
     }
 }

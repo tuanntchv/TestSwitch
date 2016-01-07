@@ -4,9 +4,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.Toast;
 
 import com.tuannt.testswitch.R;
 import com.tuannt.testswitch.ui.BaseActivity;
+import com.tuannt.testswitch.ui.BaseFragment;
 import com.tuannt.testswitch.ui.app.AppListFragment_;
 import com.tuannt.testswitch.ui.contact.ContactListFragment_;
 import com.tuannt.testswitch.ui.tag.TagListFragment_;
@@ -20,6 +22,8 @@ import org.androidannotations.annotations.ViewById;
  */
 @EActivity(R.layout.activity_home)
 public class HomeActivity extends BaseActivity {
+    private static final int TIME_INTERVAL_EXIT = 2000;
+
     public enum HomePager {
         CONTACT(0), TAG(1), APP(2),;
 
@@ -35,18 +39,10 @@ public class HomeActivity extends BaseActivity {
     }
 
     private HomePagerAdapter mAdapter;
+    private long mBackPressTime;
 
     @ViewById
     ViewPager mViewPager;
-
-    @Override
-    public void initViews() {
-        initPager();
-    }
-
-    @Override
-    public void initHeaderTitle() {
-    }
 
     private void initPager() {
         mAdapter = new HomePagerAdapter(getSupportFragmentManager());
@@ -76,6 +72,30 @@ public class HomeActivity extends BaseActivity {
         });
         // default page
         mViewPager.setCurrentItem(1);
+    }
+
+    @Override
+    public void initViews() {
+        initPager();
+    }
+
+    @Override
+    public void initHeaderTitle() {
+    }
+
+    @Override
+    public void onBackPressed() {
+        BaseFragment currentFragment = (BaseFragment) mAdapter.instantiateItem(mViewPager, mViewPager.getCurrentItem());
+        if (!currentFragment.canBack()) {
+            return;
+        }
+        // Perform double click back to exit
+        if (mBackPressTime + TIME_INTERVAL_EXIT > System.currentTimeMillis()) {
+            super.onBackPressed();
+        } else {
+            Toast.makeText(getBaseContext(), getString(R.string.press_again_to_exit),Toast.LENGTH_SHORT).show();
+            mBackPressTime = System.currentTimeMillis();
+        }
     }
 
     /**

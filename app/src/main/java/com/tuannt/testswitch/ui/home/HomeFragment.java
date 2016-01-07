@@ -16,4 +16,9 @@ public class HomeFragment extends BaseFragment {
         //TODO update later
         setHeaderTitle("Home fragment");
     }
+
+    @Override
+    public boolean canBack() {
+        return true;
+    }
 }

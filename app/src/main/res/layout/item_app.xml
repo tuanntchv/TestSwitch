@@ -9,7 +9,7 @@
     android:layout_marginTop="8dp"
     android:orientation="vertical">
 
-    <RelativeLayout
+    <com.tuannt.testswitch.ui.views.MultiListenerView
         android:id="@+id/mContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,7 +42,7 @@
             tools:ignore="RtlSymmetry"
             tools:text="Tuant NT" />
 
-    </RelativeLayout>
+    </com.tuannt.testswitch.ui.views.MultiListenerView>
 
     <com.github.siyamed.shapeimageview.CircularImageView
         android:id="@+id/mImgAvatar"

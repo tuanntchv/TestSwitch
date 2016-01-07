@@ -11,21 +11,17 @@ import lombok.Data;
  * @author TuanNT
  */
 @Data
-public class ContactListDataSet {
-    private List<Contact> contacts = new ArrayList<>();
+public class AppListDataSet {
+    private List<App> apps = new ArrayList<>();
     private boolean isMultiSelected;
     private int numOfSelected = 0;
 
     public String getName(int position) {
-        return contacts.get(position).getFirstName();
-    }
-
-    public String getPhoneNumber(int position) {
-        return contacts.get(position).getPhoneNumber();
+        return apps.get(position).getName();
     }
 
     public int getSize() {
-        return contacts.size();
+        return apps.size();
     }
 
     public void enableMultiSelected(boolean enable) {
@@ -33,9 +29,9 @@ public class ContactListDataSet {
     }
 
     public void toggleSelectItem(int position) {
-        Contact contact = contacts.get(position);
-        contact.setSelected(!contact.isSelected());
-        if (contact.isSelected()) {
+        App app = apps.get(position);
+        app.setSelected(!app.isSelected());
+        if (app.isSelected()) {
             numOfSelected++;
         } else {
             numOfSelected--;
@@ -43,25 +39,33 @@ public class ContactListDataSet {
     }
 
     public boolean isSelectedItem(int position) {
-        return contacts.get(position).isSelected();
+        return apps.get(position).isSelected();
     }
 
     public void addTagIntoSelectedContact(int position, Tag tag) {
-        contacts.get(position).addTag(tag);
+        apps.get(position).addTag(tag);
     }
 
-    public void addTagIntoSelectedContacts(Tag tag) {
-        for (Contact contact : contacts) {
-            if (contact.isSelected()) {
-                contact.addTag(tag);
+    public void addTagIntoSelectedApps(Tag tag) {
+        for (App app : apps) {
+            if (app.isSelected()) {
+                app.addTag(tag);
             }
+        }
+    }
+
+    public void clearSelectedApps() {
+        numOfSelected = 0;
+        for (App app : apps) {
+            app.setSelected(false);
         }
     }
 
     public void clearSelectedContacts() {
         numOfSelected = 0;
-        for (Contact contact : contacts) {
-            contact.setSelected(false);
+        for (App app : apps) {
+            app.setSelected(false);
         }
     }
+
 }

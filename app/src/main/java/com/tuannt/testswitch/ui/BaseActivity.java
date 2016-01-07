@@ -49,7 +49,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnBaseAc
         dialog.setCancelable(true);
         dialog.setTitle(title);
         dialog.setMessage(message);
-        dialog.setNegativeButton(R.string.btn_dialog_ok, new DialogInterface.OnClickListener() {
+        dialog.setPositiveButton(R.string.btn_dialog_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (listener != null) {
@@ -57,7 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity implements OnBaseAc
                 }
             }
         });
-        dialog.setPositiveButton(R.string.btn_dialog_cancel, new DialogInterface.OnClickListener() {
+        dialog.setNegativeButton(R.string.btn_dialog_cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (listener != null) {
